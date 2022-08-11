@@ -5,7 +5,6 @@ import { SunIcon } from "@heroicons/react/solid";
 const DisplayCategory = ({ Request, Name }) => {
   let [State, setState] = useState([]);
   let [Loader, setLoader] = useState(false);
-  console.log(Name);
 
   useEffect(() => {
     let GetData = async () => {
@@ -37,6 +36,7 @@ const DisplayCategory = ({ Request, Name }) => {
             width={170}
             objectFit="cover"
             className="rounded-sm hover:scale-105 transition-all duration-500"
+            key={Ind}
           />
         ) : (
           <Image
@@ -45,6 +45,7 @@ const DisplayCategory = ({ Request, Name }) => {
             width={130}
             objectFit="cover"
             className="rounded-sm hover:scale-110 transition-all duration-500"
+            key={Ind}
           />
         );
       })}
