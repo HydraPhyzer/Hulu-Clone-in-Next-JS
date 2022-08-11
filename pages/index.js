@@ -3,7 +3,7 @@ import Header from "../Components/Header";
 
 const Home = () => {
   return (
-    <div className= "min-h-[100vh] Background md:p-[3rem] text-white">
+    <div className= "p-2 min-h-[100vh] Background sm:p-[2rem] text-white">
       <Header/>
     </div>
   ) 

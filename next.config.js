@@ -4,4 +4,10 @@ const nextConfig = {
   swcMinify: true,
 }
 
-module.exports = nextConfig
+module.exports = {
+  images: {
+    domains: ['www.pinterest.com','i.pinimg.com'],
+  },
+}
+// module.exports = nextConfig
+

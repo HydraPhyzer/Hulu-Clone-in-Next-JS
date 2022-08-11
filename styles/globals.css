@@ -2,19 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-*
-{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
-.Background
-{
-  background:linear-gradient(to bottom  , black , #34495e);
+.Background {
+  background: linear-gradient(to top, black, #34495e);
 }
-.Active
-{
-  background: gray;
+.Active {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
