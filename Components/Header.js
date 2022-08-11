@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   let [Show, Hide] = useState(false);
@@ -12,12 +13,12 @@ const Header = () => {
             onClick={() => {
               Hide(!Show);
             }}
-            className="h-6"
+            className="h-6 text-green-500"
           />
           {Show ? (
             <input
               type="text"
-              className="bg-transparent border-[#16a085] border-[1px] h-full py-1 outline-none focus:outline-none px-2 hidden sm:block"
+              className=" bg-transparent border-[#16a085] border-[1px] h-full py-1 outline-none focus:outline-none px-2 hidden sm:block"
             />
           ) : (
             ""
@@ -50,12 +51,16 @@ const Header = () => {
             />
           </div>
           <div className="P2 flex items-center sm:h-[50px] sm:w-[50px] h-[30px] w-[30px]">
-            <Image
-              src={"/Logo.png"}
-              height={100}
-              width={100}
-              objectFit="contain"
-            />
+
+            <Link href="/">
+              <Image
+                src={"/Logo.png"}
+                height={100}
+                width={100}
+                objectFit="contain"
+                className="cursor-pointer"
+              />
+            </Link>
           </div>
         </div>
       </div>

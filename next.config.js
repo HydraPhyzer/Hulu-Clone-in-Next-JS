@@ -6,7 +6,7 @@ const nextConfig = {
 
 module.exports = {
   images: {
-    domains: ['www.pinterest.com','i.pinimg.com'],
+    domains: ['www.pinterest.com','i.pinimg.com','image.tmdb.org'],
   },
 }
 // module.exports = nextConfig
