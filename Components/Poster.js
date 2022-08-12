@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/dist/client/image";
 import { HeartIcon } from "@heroicons/react/solid";
-import DisplayCategory from "./DisplayCategory";
 const Poster = ({ Data }) => {
   return (
     <div className="h-[60vh] sm:h-[80vh] relative my-2">
@@ -13,9 +12,9 @@ const Poster = ({ Data }) => {
       />
         <div className="absolute Background opacity-40 h-[100%] w-[100%]"></div>
 
-        <div className="absolute w-[80%] sm:w-[40%] left-[10%] flex flex-col justify-center h-[100%] space-y-5">
+        <div className="absolute w-[90%] sm:w-[40%] left-[5%] sm:left-[10%] flex flex-col justify-center h-[100%] space-y-5">
             <h1 className="text-2xl sm:text-4xl font-bold">{Data?.original_title}</h1>
-            <p>{Data.overview.length>150? Data?.overview.slice(0,150).concat("..."):Data?.overview}</p>
+            <p className="Blur text-sm sm:text-lg">{Data.overview.length>150? Data?.overview.slice(0,150).concat("..."):Data?.overview}</p>
             
             <div className="Buttons flex items-center space-x-2">
                 <button className="bg-green-500 px-4 py-1 rounded-sm">Play</button>
