@@ -8,10 +8,10 @@ let MoviesObj=
         Title:"Top Rated : ",
         Request:`https://api.themoviedb.org/3/movie/top_rated?api_key=512f02bfeaad808b483c6f3bb546db74&language=en-US`
     },
-    {
-        Title:"Tv Trending : ",
-        Request:`https://api.themoviedb.org/3/trending/tv/day?api_key=512f02bfeaad808b483c6f3bb546db74&language=en-US`
-    },
+    // {
+    //     Title:"Tv Trending : ",
+    //     Request:`https://api.themoviedb.org/3/trending/tv/day?api_key=512f02bfeaad808b483c6f3bb546db74&language=en-US`
+    // },
     {
         Title:"Movies Trending : ",
         Request:`https://api.themoviedb.org/3/trending/movie/day?api_key=512f02bfeaad808b483c6f3bb546db74&language=en-US`
