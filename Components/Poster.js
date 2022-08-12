@@ -21,16 +21,23 @@ const Poster = ({ Data }) => {
     },
   };
 
-  let YoutubeId = () => {
+  let YoutubeId =async () => {
     let VGet;
-    movieTrailer(Data?.original_title)
-      .then((Res) => {
-        const Param = new URLSearchParams(new URL(Res).search);
-        VGet = Param.get("v");
-      })
-      .then(() => {
-        setYTId(VGet);
-      });
+    try
+    {
+      await movieTrailer(Data?.original_title)
+        .then((Res) => {
+          const Param = new URLSearchParams(new URL(Res).search);
+          VGet = Param.get("v");
+        })
+        .then(() => {
+          setYTId(VGet);
+        })
+    }
+    catch
+    {
+      alert("The trailer is not Available Right Now")
+    }
   };
   return (
     <>
