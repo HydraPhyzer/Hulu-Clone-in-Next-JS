@@ -1,20 +1,15 @@
-import React from 'react'
-import EachCategory from './EachCategory'
-import MoviesObj from './TMDB'
+import React from "react";
+import EachCategory from "./EachCategory";
+import MoviesObj from "./TMDB";
 
 const CategoryWise = () => {
   return (
     <div>
-        {
-            MoviesObj.map((Obj,Ind)=>
-            {
-                return(
-                    <EachCategory Props={Obj} key={Ind}/>
-                )
-            })
-        }
+      {MoviesObj.map((Obj, Ind) => {
+        return <EachCategory Props={Obj} key={Ind} />;
+      })}
     </div>
-  )
-}
+  );
+};
 
-export default CategoryWise
+export default CategoryWise;
