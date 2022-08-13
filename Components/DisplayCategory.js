@@ -15,7 +15,6 @@ const DisplayCategory = ({ Request, Name }) => {
           return Res.json();
         })
         .then((Data) => {
-          console.log(Data);
           setLoader(false);
           setState(Data.results);
         });
@@ -36,7 +35,7 @@ const DisplayCategory = ({ Request, Name }) => {
     <div className="w-max flex gap-2 items-center rounded-sm">
       {State.map((El, Ind) => {
         return Name == "Popular : " ? (
-          <Link href={`/movie/${El.id}`}>
+          <Link href={`/movie/${El.id}`} key={Ind}>
             <Image
               src={`https://image.tmdb.org/t/p/w500/${El.poster_path}`}
               height={230}
@@ -47,7 +46,7 @@ const DisplayCategory = ({ Request, Name }) => {
             />
           </Link>
         ) : (
-          <Link href={`/movie/${El.id}`}>
+          <Link href={`/movie/${El.id}`} key={Ind}>
             <Image
               src={`https://image.tmdb.org/t/p/w500/${El.poster_path}`}
               height={200}

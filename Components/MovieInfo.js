@@ -9,10 +9,10 @@ const MovieInfo = ({ Data }) => {
         <div>
           <div className="min-w-[50vw] flex space-x-4 my-4 overflow-x-scroll Each">
             {Data?.genres
-              ? Data?.genres?.map((Elem) => {
+              ? Data?.genres?.map((Elem , Ind) => {
                   return (
                     <>
-                      <p className="border-gray-500 text-xs sm:text-sm px-3 py-1 rounded-full border-[2px] bg-transparent">
+                      <p key={Ind} className="border-gray-500 text-xs sm:text-sm px-3 py-1 rounded-full border-[2px] bg-transparent">
                         {Elem?.name}
                       </p>
                     </>
@@ -36,8 +36,8 @@ const MovieInfo = ({ Data }) => {
               <label htmlFor="">Language&nbsp;:&nbsp;</label>
               <p className="flex space-x-2 Each overflow-x-scroll">
                 {Data?.spoken_languages
-                  ? Data?.spoken_languages.map((Ele) => {
-                      return <span>{Ele.english_name}</span>;
+                  ? Data?.spoken_languages.map((Ele,Ind) => {
+                      return <span key={Ind}>{Ele.english_name}</span>;
                     })
                   : ""}
               </p>
@@ -55,9 +55,9 @@ const MovieInfo = ({ Data }) => {
 
         <div className="overflow-x-scroll max-w-[95vw] Each flex space-x-5 mx-auto Design px-3 rounded-md py-1 self-center">
           {Data.production_companies
-            ? Data.production_companies.map((Company) => {
+            ? Data.production_companies.map((Company , Ind) => {
                 return (
-                  <div className="relative h-[100px] w-[100px]">
+                  <div key={Ind} className="relative h-[100px] w-[100px]">
                     <Image
                       src={`https://image.tmdb.org/t/p/original${Company.logo_path}`}
                       layout="fill"

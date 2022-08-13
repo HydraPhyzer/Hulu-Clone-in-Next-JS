@@ -4,15 +4,84 @@ import { HeartIcon } from "@heroicons/react/solid";
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
 import { useEffect } from "react";
+import { auth, db } from "../Firebase";
+import { setDoc, doc, collection, getDocs, updateDoc } from "firebase/firestore";
+import { deleteDoc } from "firebase/firestore";
 
 const Poster = ({ Data }) => {
   let [YTId, setYTId] = useState(null);
+
+  let [User, setUser] = useState(null);
+
+  let [Like, setLike] = useState(false);
+
+  let [Selected, setSelected] = useState(null);
+  let [AlreadyLike,setAlreadyLike] = useState(null);
+
+  let AddStuff = async () => {
+    if (!User) {
+      alert("You Need to SignIn First");
+    } else {
+      if (!Like) {
+        const MovieRef = doc(db, `${User?.uid}`, `${Data?.id}`);
+        await setDoc(
+          MovieRef,
+          {
+            Movie: Data,
+            Liked: false,
+          },
+          { merge: true }
+        ).then(() => {
+          setSelected(Data);
+        });
+      } else {
+        const MovieRef = doc(db, `${User?.uid}`, `${Data?.id}`);
+        await setDoc(
+          MovieRef,
+          {
+            Movie: Data,
+            Liked: true,
+          },
+          { merge: true }
+        ).then(() => {
+          setSelected(Data);
+        });
+      }
+    }
+  };
+
+  let RemoveStuff = () => {
+    let DocRef = doc(db, `${User?.uid}`, `${Data?.id}`);
+    deleteDoc(DocRef).then(() => {
+      setSelected(null);
+    });
+  };
 
   useEffect(() => {
     window.addEventListener("click", () => {
       setYTId("");
     });
+
+    auth.onAuthStateChanged((Use) => {
+      setUser(Use);
+    });
   }, []);
+
+  let Func = async () => {
+    const CollectionRef = collection(db, `${User?.uid}`);
+    await getDocs(CollectionRef).then((Snap) => {
+      Snap.docs.map((EachSnap) => {
+        if (EachSnap?.id == Data?.id) {
+          console.log(EachSnap);
+          setSelected(EachSnap);
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    Func();
+  }, [Data, User]);
 
   let Options = {
     width: "100%",
@@ -21,10 +90,9 @@ const Poster = ({ Data }) => {
     },
   };
 
-  let YoutubeId =async () => {
+  let YoutubeId = async () => {
     let VGet;
-    try
-    {
+    try {
       await movieTrailer(Data?.original_title)
         .then((Res) => {
           const Param = new URLSearchParams(new URL(Res).search);
@@ -32,11 +100,9 @@ const Poster = ({ Data }) => {
         })
         .then(() => {
           setYTId(VGet);
-        })
-    }
-    catch
-    {
-      alert("The trailer is not Available Right Now")
+        });
+    } catch {
+      alert("The trailer is not Available Right Now");
     }
   };
   return (
@@ -71,18 +137,70 @@ const Poster = ({ Data }) => {
                 >
                   Play
                 </button>
-                <button className="bg-green-500 px-4 py-1 rounded-sm">
-                  Add to Stuff
+
+                {Selected == null ? (
+                  <button
+                    onClick={() => {
+                      AddStuff();
+                    }}
+                    className="bg-green-500 px-4 py-1 rounded-sm"
+                  >
+                    Add to Stuff
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      RemoveStuff();
+                    }}
+                    className="bg-black  px-4 py-1 rounded-sm"
+                  >
+                    Remove From Stuff
+                  </button>
+                )}
+                {/* ===================== */}
+
+                {Selected?._document?.data?.value?.mapValue?.fields?.Liked
+                  ?.booleanValue == false ? (
+                  <button
+                    onClick={() => {
+                      setLike(true);
+                      Like ? AddStuff() : "";
+                    }}
+                    className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2"
+                  >
+                    <HeartIcon className="h-6 text-white" />
+                  </button>
+                ) : (
+                  <button
+                  onClick={() => {
+                    setLike(false);
+                    !Like ? AddStuff() : "";
+                  }}
+                  className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2"
+                >
+                  <HeartIcon className="h-6 text-black" />
                 </button>
-                <button className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2">
-                  <HeartIcon className="hover:animate-bounce h-6 text-white" />
-                </button>
+                )}
+                {/* ============================== */}
+                {/* <button
+                  onClick={() => {
+                    setLike(true);
+                    Like ? AddStuff() : "";
+                  }}
+                  className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2"
+                >
+                  <HeartIcon className="h-6 text-white" />
+                </button> */}
               </div>
             </div>
           </div>
         ) : YTId !== "" ? (
           <div className="h-[60vh] sm:h-[80vh] relative">
-            <YouTube className="object-contain" videoId={`${YTId}`} opts={Options} />
+            <YouTube
+              className="object-contain"
+              videoId={`${YTId}`}
+              opts={Options}
+            />
           </div>
         ) : (
           ""

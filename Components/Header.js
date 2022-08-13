@@ -43,11 +43,21 @@ const Header = () => {
           )}
           <nav>
             <ul className="flex space-x-1 items-center ">
-              <li className="Active Link px-2 py-1  hover:cursor-pointer">
-                Home
-              </li>
-              <li className="Link px-2 py-1  hover:cursor-pointer">My Stuff</li>
-              <li className="Link px-2 py-1  hover:cursor-pointer">My Liked</li>
+              <Link href="/">
+                <li className="Active Link px-2 py-1  hover:cursor-pointer">
+                  Home
+                </li>
+              </Link>
+              <Link href="/mystuff">
+                <li className="Link px-2 py-1  hover:cursor-pointer">
+                  My Stuff
+                </li>
+              </Link>
+              <Link href="/myliked">
+                <li className="Link px-2 py-1  hover:cursor-pointer">
+                  My Liked
+                </li>
+              </Link>
             </ul>
           </nav>
         </div>
