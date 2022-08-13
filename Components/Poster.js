@@ -5,8 +5,14 @@ import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
 import { useEffect } from "react";
 import { auth, db } from "../Firebase";
-import { setDoc, doc, collection, getDocs, updateDoc } from "firebase/firestore";
-import { deleteDoc } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  collection,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+import { deleteField } from "firebase/firestore";
 
 const Poster = ({ Data }) => {
   let [YTId, setYTId] = useState(null);
@@ -16,45 +22,55 @@ const Poster = ({ Data }) => {
   let [Like, setLike] = useState(false);
 
   let [Selected, setSelected] = useState(null);
-  let [AlreadyLike,setAlreadyLike] = useState(null);
+  let [AlreadyLike, setAlreadyLike] = useState(null);
 
   let AddStuff = async () => {
     if (!User) {
       alert("You Need to SignIn First");
     } else {
-      if (!Like) {
-        const MovieRef = doc(db, `${User?.uid}`, `${Data?.id}`);
-        await setDoc(
-          MovieRef,
-          {
-            Movie: Data,
-            Liked: false,
-          },
-          { merge: true }
-        ).then(() => {
-          setSelected(Data);
-        });
-      } else {
-        const MovieRef = doc(db, `${User?.uid}`, `${Data?.id}`);
-        await setDoc(
-          MovieRef,
-          {
-            Movie: Data,
-            Liked: true,
-          },
-          { merge: true }
-        ).then(() => {
-          setSelected(Data);
-        });
-      }
+      const MovieRef = doc(db, `${User?.uid}`, `${Data?.id}`);
+      await setDoc(MovieRef, {
+        Movie: Data,
+      }).then(() => {
+        setSelected(Data);
+      });
     }
   };
 
-  let RemoveStuff = () => {
+  let RemoveStuff = async () => {
     let DocRef = doc(db, `${User?.uid}`, `${Data?.id}`);
-    deleteDoc(DocRef).then(() => {
+    await updateDoc(DocRef, {
+      Movie: deleteField(),
+    }).then(() => {
       setSelected(null);
     });
+  };
+
+  let AddLike = async () => {
+    if (!User) {
+      alert("You Need to SignIn First");
+    } else {
+      const MovieRef = doc(db, `${User?.uid}`, `${Data?.id}`);
+      await setDoc(
+        MovieRef,
+        {
+          LikeMovie: Data,
+          Liked: true,
+        },
+        { merge: true }
+      ).then(() => {setAlreadyLike(true)});
+    }
+  };
+  let RemoveLike = async () => {
+    const MovieRef = doc(db, `${User?.uid}`, `${Data?.id}`);
+    await setDoc(
+      MovieRef,
+      {
+        LikeMovie: deleteField(),
+        Liked: deleteField(),
+      },
+      { merge: true }
+    ).then(() => {setAlreadyLike(false)});
   };
 
   useEffect(() => {
@@ -72,8 +88,21 @@ const Poster = ({ Data }) => {
     await getDocs(CollectionRef).then((Snap) => {
       Snap.docs.map((EachSnap) => {
         if (EachSnap?.id == Data?.id) {
-          console.log(EachSnap);
-          setSelected(EachSnap);
+          console.log(EachSnap)
+
+          EachSnap?._document?.data.value?.mapValue?.fields?.Movie?
+          setSelected(EachSnap)
+          :setSelected(null)
+
+          if(EachSnap?._document?.data?.value?.mapValue?.fields?.Liked
+            ?.booleanValue==true)
+            {
+              setAlreadyLike(true)
+            }
+            else
+            {
+              setAlreadyLike(false)
+            }
         }
       });
     });
@@ -159,12 +188,10 @@ const Poster = ({ Data }) => {
                 )}
                 {/* ===================== */}
 
-                {Selected?._document?.data?.value?.mapValue?.fields?.Liked
-                  ?.booleanValue == false ? (
+                {!AlreadyLike ?  (
                   <button
                     onClick={() => {
-                      setLike(true);
-                      Like ? AddStuff() : "";
+                      AddLike();
                     }}
                     className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2"
                   >
@@ -172,25 +199,14 @@ const Poster = ({ Data }) => {
                   </button>
                 ) : (
                   <button
-                  onClick={() => {
-                    setLike(false);
-                    !Like ? AddStuff() : "";
-                  }}
-                  className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2"
-                >
-                  <HeartIcon className="h-6 text-black" />
-                </button>
+                    onClick={() => {
+                      RemoveLike();
+                    }}
+                    className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2"
+                  >
+                    <HeartIcon className="h-6 text-black" />
+                  </button>
                 )}
-                {/* ============================== */}
-                {/* <button
-                  onClick={() => {
-                    setLike(true);
-                    Like ? AddStuff() : "";
-                  }}
-                  className="bg-gradient-to-b from-yellow-500 to-pink-500 py-1 rounded-sm px-2"
-                >
-                  <HeartIcon className="h-6 text-white" />
-                </button> */}
               </div>
             </div>
           </div>

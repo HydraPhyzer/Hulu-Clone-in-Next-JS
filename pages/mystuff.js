@@ -39,7 +39,8 @@ useEffect(() => {
         Stuff.map((EachStuff,Ind)=>
         {
             return(
-                <MyStuffMovie Movie={EachStuff.Movie} key={Ind}/>
+              EachStuff.Movie?
+                <MyStuffMovie Movie={EachStuff.Movie} key={Ind}/>:""
             )
         })
         :""

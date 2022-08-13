@@ -41,7 +41,7 @@ const mystuff = () => {
         {
           return(
                 EachStuff.Liked?
-                  <MyStuffMovie Movie={EachStuff.Movie} key={Ind}/>
+                  <MyStuffMovie Movie={EachStuff.LikeMovie} key={Ind}/>
                 :""
             )
         })
