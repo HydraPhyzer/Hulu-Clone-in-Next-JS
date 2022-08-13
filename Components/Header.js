@@ -6,12 +6,17 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../Firebase";
 
 const Header = () => {
-  let [Show, Hide] = useState(false);
+  let [Show, setShow] = useState(1);
   let [User, setUser] = useState(null);
 
   auth.onAuthStateChanged((Use) => {
     setUser(Use);
   });
+
+  let Hide=()=>
+  {
+    setShow(!Show)
+  }
 
   let SignIn = () => {
     signInWithPopup(auth, provider)
@@ -27,12 +32,11 @@ const Header = () => {
     <>
       <div className="sm:text-lg text-xs flex items-center justify-between">
         <div className="Left flex items-center sm:space-x-5 space-x-2">
-          <SearchIcon
-            onClick={() => {
-              Hide(!Show);
-            }}
-            className="h-6 text-green-500"
-          />
+          <div>
+            <SearchIcon
+              className="h-6 text-green-500"
+            />
+          </div>
           {Show ? (
             <input
               type="text"

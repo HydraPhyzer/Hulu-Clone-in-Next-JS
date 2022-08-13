@@ -53,16 +53,18 @@ const MovieInfo = ({ Data }) => {
           </div>
         </div>
 
-        <div className="overflow-x-scroll max-w-[95vw] Each flex space-x-5 mx-auto Design px-3 rounded-md py-1 self-center">
+        <div className="overflow-x-scroll max-w-[90vw] mx-5 Each flex space-x-5 Design px-3 rounded-md py-1 self-center">
           {Data.production_companies
             ? Data.production_companies.map((Company , Ind) => {
                 return (
-                  <div key={Ind} className="relative h-[100px] w-[100px]">
+                  <div key={Ind} className="relative h-[100px] w-[100px] items-center flex">
+                    {Company?.logo_path?
                     <Image
                       src={`https://image.tmdb.org/t/p/original${Company.logo_path}`}
                       layout="fill"
                       className="object-contain"
-                    />
+                      />
+                      :Company?.name}
                   </div>
                 );
               })
