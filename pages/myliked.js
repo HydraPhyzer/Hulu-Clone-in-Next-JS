@@ -33,7 +33,7 @@ const MyLiked = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-3">
+    <div className="grid grid-cols-3 sm:flex sm:space-x-2">
       <Head>
       <title>My Liked</title>
     </Head>
