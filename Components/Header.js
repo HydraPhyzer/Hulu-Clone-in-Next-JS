@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,15 +8,29 @@ import { auth, provider } from "../Firebase";
 const Header = () => {
   let [Show, setShow] = useState(1);
   let [User, setUser] = useState(null);
+  let [SearchMovies, setSearchMovies] = useState([]);
 
   auth.onAuthStateChanged((Use) => {
     setUser(Use);
   });
 
-  let Hide=()=>
-  {
-    setShow(!Show)
-  }
+  useEffect(() => {
+    window.addEventListener("click", () => {
+      Write("");
+    });
+  }, []);
+
+  let Write = async (Text) => {
+    await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=512f02bfeaad808b483c6f3bb546db74&query=${Text}`
+    )
+      .then((Res) => {
+        return Res.json();
+      })
+      .then((Data) => {
+        setSearchMovies(Data?.results);
+      });
+  };
 
   let SignIn = () => {
     signInWithPopup(auth, provider)
@@ -33,15 +47,45 @@ const Header = () => {
       <div className="sm:text-lg text-xs flex items-center justify-between">
         <div className="Left flex items-center sm:space-x-5 space-x-2">
           <div>
-            <SearchIcon
-              className="h-6 text-green-500"
-            />
+            <SearchIcon className="h-6 text-green-500" />
           </div>
           {Show ? (
-            <input
-              type="text"
-              className=" bg-transparent border-[#16a085] border-[1px] h-full py-1 outline-none focus:outline-none px-2 hidden sm:block"
-            />
+            <div className="relative hidden sm:block">
+              <input
+                type="text"
+                className=" bg-transparent border-[#16a085] border-[1px] h-full py-1 outline-none focus:outline-none px-2"
+                onChange={(E) => {
+                  Write(E.target.value);
+                }}
+              />
+              <div className="space-y-2 absolute z-10 min-h-fit max-h-[250px] w-[100%] bg-black overflow-y-scroll Each">
+                {SearchMovies?.map((GetMovie) => {
+                  return (
+                    <Link href={`/movie/${GetMovie?.id}`}>
+                      <span
+                        onClick={() => {
+                          Write("");
+                        }}
+                        className="flex cursor-pointer p-2"
+                      >
+                        <div className=" P1 sm:min-w-[40%] m-2 ml-0 flex items-center justify-center sm:h-[70px] sm:w-[70px] h-[30px] w-[30px]">
+                          <Image
+                            src={`https://image.tmdb.org/t/p/w500/${GetMovie?.poster_path}`}
+                            height={100}
+                            width={100}
+                            objectFit="cover"
+                            className="rounded-sm"
+                          />
+                        </div>
+                        <span className="text-sm overflow-y-scroll Each">
+                          {GetMovie?.title}
+                        </span>
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           ) : (
             ""
           )}
@@ -105,10 +149,42 @@ const Header = () => {
       </div>
 
       {Show ? (
-        <input
-          type="text"
-          className="px-2 text-xs py-1 w-[100%] my-2 bg-transparent border-[#16a085] border-[1px] outline-none focus:ou sm:hidden"
-        />
+        <div className="relative sm:hidden">
+          <input
+            type="text"
+            className="px-2 text-xs py-1 w-[100%] my-2 bg-transparent border-[#16a085] border-[1px] outline-none focus:ou "
+            onChange={(E) => {
+              Write(E.target.value);
+            }}
+          />
+          <div className="absolute z-10 min-h-fit max-h-[300px] w-[100%] bg-black overflow-y-scroll Each px-2">
+            {SearchMovies?.map((GetMovie) => {
+              return (
+                <Link href={`/movie/${GetMovie?.id}`}>
+                  <span
+                    onClick={() => {
+                      Write("");
+                    }}
+                    className="flex cursor-pointer p-2 Blur my-2"
+                  >
+                    <div className="mr-2 ml-0 flex items-center justify-center h-[70px] w-[70px]">
+                      <Image
+                        src={`https://image.tmdb.org/t/p/w500/${GetMovie?.poster_path}`}
+                        height={100}
+                        width={100}
+                        objectFit="cover"
+                        className="rounded-sm"
+                      />
+                    </div>
+                    <span className="text-sm overflow-y-scroll Each items-center flex">
+                      {GetMovie?.title}
+                    </span>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       ) : (
         ""
       )}

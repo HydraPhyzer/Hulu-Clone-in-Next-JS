@@ -4,7 +4,7 @@ import MoviesObj from "./TMDB";
 
 const CategoryWise = () => {
   return (
-    <div>
+    <div className="">
       {MoviesObj.map((Obj, Ind) => {
         return <EachCategory Props={Obj} key={Ind} />;
       })}
