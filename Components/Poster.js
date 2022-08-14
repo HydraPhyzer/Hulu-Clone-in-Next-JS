@@ -19,8 +19,6 @@ const Poster = ({ Data }) => {
 
   let [User, setUser] = useState(null);
 
-  let [Like, setLike] = useState(false);
-
   let [Selected, setSelected] = useState(null);
   let [AlreadyLike, setAlreadyLike] = useState(null);
 
@@ -88,9 +86,8 @@ const Poster = ({ Data }) => {
     await getDocs(CollectionRef).then((Snap) => {
       Snap.docs.map((EachSnap) => {
         if (EachSnap?.id == Data?.id) {
-          console.log(EachSnap)
 
-          EachSnap?._document?.data.value?.mapValue?.fields?.Movie?
+          (EachSnap?._document?.data.value?.mapValue?.fields?.Movie) ?
           setSelected(EachSnap)
           :setSelected(null)
 
@@ -109,6 +106,8 @@ const Poster = ({ Data }) => {
   };
 
   useEffect(() => {
+    setSelected(null)
+    setAlreadyLike(null)
     Func();
   }, [Data, User]);
 

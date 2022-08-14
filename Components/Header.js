@@ -12,22 +12,6 @@ const Header = () => {
   let [User, setUser] = useState(null);
   let [SearchMovies, setSearchMovies] = useState([]);
 
-  useEffect(()=>
-  {
-    var btnContainer = document.getElementsByClassName("Dad");
-  
-    var btns = btnContainer[0].getElementsByClassName("Son");
-    
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener("click", function () {
-        var current = document.getElementsByClassName("Active");
-        current[0].className = current[0].className.replace("Active", "");
-        this.className= "Active";
-      });
-    }
-  })
-
-
   auth.onAuthStateChanged((Use) => {
     setUser(Use);
   });

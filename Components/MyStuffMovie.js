@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const MyStuffMovie = ({ Movie }) => {
-  console.log(Movie);
   return (
     <div className="gap-2 items-center rounded-sm">
       <Link href={`/movie/${Movie.id}`}>

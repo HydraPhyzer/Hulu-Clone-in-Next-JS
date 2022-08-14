@@ -11,7 +11,6 @@ const MovieCredits = ({ Id }) => {
     let Data = await Name.json();
 
     setCredits(Data);
-    console.log(Data);
   };
   useEffect(() => {
     GetCredits();

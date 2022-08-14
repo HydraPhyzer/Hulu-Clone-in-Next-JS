@@ -3,6 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../Firebase";
 import MyStuffMovie from "../Components/MyStuffMovie";
+import Head from 'next/head'
 
 const mystuff = () => {
   let [User, setUser] = useState(null);
@@ -34,6 +35,9 @@ useEffect(() => {
   }, []);
 
   return <div className="flex space-x-2">
+    <Head>
+      <title>My Stuff</title>
+    </Head>
     {
         Stuff?
         Stuff.map((EachStuff,Ind)=>

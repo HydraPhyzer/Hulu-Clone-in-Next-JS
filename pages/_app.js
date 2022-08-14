@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <link rel="shortcut icon" href="/Hulu.ico" type="image/x-icon" />
-        <title>Hulu Clone in Next JS</title>
+        <title>Home - Hulu Clone</title>
       </Head>
 
       <div className="p-2 min-h-[100vh] Background sm:p-[2rem] text-white">
