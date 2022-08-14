@@ -17,9 +17,9 @@ const MovieCredits = ({ Id }) => {
   }, [Id]);
   return (
     <div className="flex space-x-5 text-center my-5">
-      {Credits?.cast?.map((Get) => {
+      {Credits?.cast?.map((Get,Ind) => {
         return (
-          <div>
+          <div key={Ind}>
             <div className="relative h-[100px] w-[100px] rounded-full object-contain">
               <Image
                 src={`https://image.tmdb.org/t/p/original${Get.profile_path}`}

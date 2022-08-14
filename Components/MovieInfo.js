@@ -11,11 +11,9 @@ const MovieInfo = ({ Data }) => {
             {Data?.genres
               ? Data?.genres?.map((Elem , Ind) => {
                   return (
-                    <>
                       <p key={Ind} className="border-gray-500 text-xs sm:text-sm px-3 py-1 rounded-full border-[2px] bg-transparent">
                         {Elem?.name}
                       </p>
-                    </>
                   );
                 })
               : ""}

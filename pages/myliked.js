@@ -35,7 +35,7 @@ const mystuff = () => {
   }, []);
 
   return (
-    <div className="flex space-x-2">
+    <div className="grid grid-cols-3">
       <Head>
       <title>My Liked</title>
     </Head>
@@ -49,7 +49,8 @@ const mystuff = () => {
                 :""
             )
         })
-        :""
+        :
+        ""
       }
     </div>
   );
