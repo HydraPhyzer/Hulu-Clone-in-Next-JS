@@ -4,11 +4,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../Firebase";
+import { useRouter } from "next/router";
 
 const Header = () => {
+  let Router=useRouter()
   let [Show, setShow] = useState(1);
   let [User, setUser] = useState(null);
   let [SearchMovies, setSearchMovies] = useState([]);
+
+  useEffect(()=>
+  {
+    var btnContainer = document.getElementsByClassName("Dad");
+  
+    var btns = btnContainer[0].getElementsByClassName("Son");
+    
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function () {
+        var current = document.getElementsByClassName("Active");
+        current[0].className = current[0].className.replace("Active", "");
+        this.className= "Active";
+      });
+    }
+  })
+
 
   auth.onAuthStateChanged((Use) => {
     setUser(Use);
@@ -90,20 +108,26 @@ const Header = () => {
             ""
           )}
           <nav>
-            <ul className="flex space-x-1 items-center ">
+            <ul className="flex space-x-1 items-center Dad">
               <Link href="/">
-                <li className="Active Link px-2 py-1  hover:cursor-pointer">
-                  Home
+                <li className="Link Son">
+                  <p className={`${Router.route=='/'?"Active px-2 py-1 cursor-pointer":"px-2 py-1 cursor-pointer"}`}>
+                    Home
+                  </p>
                 </li>
               </Link>
               <Link href="/mystuff">
-                <li className="Link px-2 py-1  hover:cursor-pointer">
-                  My Stuff
+                <li className="Link Son">
+                  <p className={`${Router.route=='/mystuff'?"Active px-2 py-1 cursor-pointer":"px-2 py-1 cursor-pointer"}`}>
+                    My Stuff
+                  </p>
                 </li>
               </Link>
               <Link href="/myliked">
-                <li className="Link px-2 py-1  hover:cursor-pointer">
-                  My Liked
+                <li className="Link Son">
+                  <p className={`${Router.route=='/myliked'?"Active px-2 py-1 cursor-pointer":"px-2 py-1 cursor-pointer"}`}>
+                    My Liked
+                  </p>
                 </li>
               </Link>
             </ul>
