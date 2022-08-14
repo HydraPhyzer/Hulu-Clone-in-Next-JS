@@ -1,12 +1,10 @@
-import { data } from "autoprefixer";
 import { collection, getDocs } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../Firebase";
 import MyStuffMovie from "../Components/MyStuffMovie";
-import Link from "next/link";
 import Head from "next/head";
 
-const mystuff = () => {
+const MyLiked = () => {
   let [User, setUser] = useState(null);
   let [Stuff, setStuff] = useState([]);
 
@@ -56,4 +54,4 @@ const mystuff = () => {
   );
 };
 
-export default mystuff;
+export default MyLiked;

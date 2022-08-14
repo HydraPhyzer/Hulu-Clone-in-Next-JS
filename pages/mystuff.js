@@ -5,7 +5,7 @@ import { auth, db } from "../Firebase";
 import MyStuffMovie from "../Components/MyStuffMovie";
 import Head from "next/head";
 
-const mystuff = () => {
+const Mystuff = () => {
   let [User, setUser] = useState(null);
   let [Stuff, setStuff] = useState([]);
 
@@ -49,4 +49,4 @@ const mystuff = () => {
   );
 };
 
-export default mystuff;
+export default Mystuff;
